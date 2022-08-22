@@ -1,0 +1,44 @@
+﻿MVC
+
+Model => Data representation for the view
+
+View => HTML + CSS + JS + Razor
+
+Controller => 
+
+HTTP Requests
+
+GET: get movie detail
+PUT: change password
+POST: user registration
+DELETE: delete user
+
+Request goes to Controller
+
+GET http://movieshop.com/movies/details/2
+
+domain/controller/action_method
+
+return View()
+Goes to the View folder and the controller folder within
+action method name needs to be the same as the cshtml file in controller folder in views
+
+ApplicationCore:
+1. Entities: 
+2. Exceptions: custom exceptions
+3. Models: how the data is passed to View
+
+Services: business logic as interfaces
+Repositories: data access logic
+
+Defined in application core, and implemented in infrastructure
+
+Project reference:
+Intrastructure->Application Core
+MVC->Infrastructure and Application Core
+
+----------------------------------------------------
+QUESTION:
+1. Compositional order of the url is strictly syntatical or conventional? 
+(e.g. id first, then controller)
+Ans: as long as the pattern is human-friendly, meaning it is logical enough to understand what the url means, any amount of patterns can be created (in controllers)
