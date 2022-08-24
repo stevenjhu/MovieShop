@@ -2,7 +2,7 @@
 
 namespace MovieShopMVC.Controllers
 {
-    public class CastController1 : Controller
+    public class CastController : Controller
     {
         public IActionResult Index()
         {
