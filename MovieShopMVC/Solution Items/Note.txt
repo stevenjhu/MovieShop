@@ -38,7 +38,39 @@ Intrastructure->Application Core
 MVC->Infrastructure and Application Core
 
 ----------------------------------------------------
+
+EF Core - 6
+Dapper -> micro-ORM
+ORM => Object Relation Mapper - Northwind, Adventure
+
+Developer's Job to make sure the query is optimized behind the scene of EF Core
+
+EF Core Code First approach
+https://docs.microsoft.com/en-us/ef/core/cli/dotnet
+1. Install EF Core tools
+dotnet tool install --global dotnet-ef
+OR
+dotnet tool update --global dotnet-ef
+
+2. Install Microsoft.EntityFrameworkCore.SqlServer in Infrastructure and MVC projects
+3. Install Microsoft.EntityFrameworkCore.Design in MVC
+4. Create a class in inherits from DbContext => represent the database
+5. Create a connnection string which EF Core is going to use to access the database
+	should include server name, database name, and any credentials
+6. Read the connection string from appsetting.json and inject into MovieShopDbContext
+7. DbSet represents your database table, create an entity class that represents your table 
+8. Migrations -- Create initial migration:  
+    dotnet ef migrations add InitialMigration  -p ../Infrastructure/Infrastructure.csproj
+9. Apply the Migration -  
+    dotnet ef database update
+10. TO make any schema changes, we can use 2 approaches
+    1. Data Annotations => using System.ComponentModel.DataAnnotations;
+    2. Fluent API => much more powerful and has more options
+
+
 QUESTION:
 1. Compositional order of the url is strictly syntatical or conventional? 
 (e.g. id first, then controller)
 Ans: as long as the pattern is human-friendly, meaning it is logical enough to understand what the url means, any amount of patterns can be created (in controllers)
+2. What does .HasDefaultValue(9.9m)  means?
+3. How do we map column from string to uniqueidentifier?
