@@ -24,7 +24,7 @@ namespace Infrastructure.Data
         public DbSet<MovieGenre> MovieGenres { get; set; }
         public DbSet<Trailer> Trailers { get; set; }
         public DbSet<Cast> Casts { get; set; }
-        public DbSet<MovieCast> MoviesCasts { get; set; }
+        public DbSet<MovieCast> MovieCasts { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
@@ -56,7 +56,7 @@ namespace Infrastructure.Data
         {
             builder.HasKey(mg => new {mg.MovieId, mg.UserId });
             builder.Property(m => m.PurchaseDateTime).HasDefaultValueSql("getdate()");
-            builder.HasAlternateKey(m => m.PurchaseNumber);
+            builder.Property(m => m.PurchaseNumber).HasDefaultValue(new Guid("{00000000-0000-0000-0000-000000000000}"));
             builder.Property(m => m.TotalPrice).HasColumnType("decimal(5,2)").HasDefaultValue(9.9m);
         }
 

@@ -202,7 +202,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviesCasts");
+                    b.ToTable("MovieCasts");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.MovieGenre", b =>
@@ -233,9 +233,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<string>("PurchaseNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("PurchaseNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
 
                     b.Property<decimal>("TotalPrice")
                         .ValueGeneratedOnAdd()
@@ -243,8 +244,6 @@ namespace Infrastructure.Migrations
                         .HasDefaultValue(9.9m);
 
                     b.HasKey("MovieId", "UserId");
-
-                    b.HasAlternateKey("PurchaseNumber");
 
                     b.HasIndex("UserId");
 

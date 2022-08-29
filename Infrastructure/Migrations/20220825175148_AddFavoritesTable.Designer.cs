@@ -202,7 +202,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviesCasts");
+                    b.ToTable("MovieCasts");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.MovieGenre", b =>

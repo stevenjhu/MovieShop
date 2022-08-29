@@ -1,9 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplicationCore.Contracts.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MovieShopMVC.Controllers
 {
     public class MoviesController : Controller
     {
+
+        //public MoviesController(IMovieService movieService)
+        //{
+        //    _movieService = movieService;
+        //}
+        private readonly IMovieService _movieService;
+        public MoviesController(IMovieService movieService)
+        {
+            _movieService = movieService;
+        }
+
+        [HttpGet]
         public IActionResult Details(int id)
         {
             //go to db and get the movie info by movid id
@@ -16,9 +29,10 @@ namespace MovieShopMVC.Controllers
             //Code is Maintenable, Reusable, Readable, Extensible, Testable
             //layers => Layered architecture
             //Onion, Clean Architecture
+            var movieDetails = _movieService.GetMovieDetails(id);
             
 
-            return View();
+            return View(movieDetails);
         }
     }
 }
