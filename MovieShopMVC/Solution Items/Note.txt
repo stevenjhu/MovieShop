@@ -67,6 +67,19 @@ dotnet tool update --global dotnet-ef
     1. Data Annotations => using System.ComponentModel.DataAnnotations;
     2. Fluent API => much more powerful and has more options
 
+11.
+
+Salt: unique generated hash value that is added to the password to make the hashed password unique. 
+(Even if two passwords are the same, because the salt of two users are never the same, the passwords will always be different)
+To check password, redo conversion of input password to hashed password with salt, and then compared with stored hashed password to authenticate user
+
+
+Model Binding (case insensitive): map data from input form to Model property
+
+TO-DO:
+1. Azure, create account, activate free account with PERSONAL email, 200$ one
+2. Sign into Azure portal
+3. Read materials in LMS
 
 QUESTION:
 1. Compositional order of the url is strictly syntatical or conventional? 
@@ -74,3 +87,4 @@ QUESTION:
 Ans: as long as the pattern is human-friendly, meaning it is logical enough to understand what the url means, any amount of patterns can be created (in controllers)
 2. What does .HasDefaultValue(9.9m)  means?
 3. How do we map column from string to uniqueidentifier?
+
