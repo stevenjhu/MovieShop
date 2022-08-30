@@ -10,5 +10,7 @@ namespace ApplicationCore.Models
     {
         public int CastId { get; set; }
         public int MovieId { get; set; }
+        public string Title { get; set; }
+        public string PosterUrl { get; set; }
     }
 }
