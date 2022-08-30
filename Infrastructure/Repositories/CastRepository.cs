@@ -18,11 +18,11 @@ namespace Infrastructure.Repositories
             _movieShopDbContext = movieShopDbContext;
         }
 
-        public Cast GetById(int id)
+        public async Task<Cast> GetById(int id)
         {
-            var castDetails = _movieShopDbContext.Casts
+            var castDetails = await _movieShopDbContext.Casts
                 .Include(m => m.MoviesOfCast)
-                .FirstOrDefault(m=>m.Id==id);
+                .FirstOrDefaultAsync(m=>m.Id==id);
             return castDetails;
 
         }

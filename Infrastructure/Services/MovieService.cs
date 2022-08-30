@@ -30,7 +30,6 @@ namespace Infrastructure.Services
             }
 
             return movieCards;
-
         }
 
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)

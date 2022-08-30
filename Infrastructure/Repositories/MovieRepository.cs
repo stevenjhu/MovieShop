@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories
             //use MovieShopDbContext and Movies DbSet
             //select top 30 * from Movies order by Revenue
             //corresponding LINQ Query
-            var movies = await _movieShopDbContext.Movies.OrderBy(m => m.Revenue).Take(30).ToListAsync();
+            var movies = await _movieShopDbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();
             return movies;
         }
     }
