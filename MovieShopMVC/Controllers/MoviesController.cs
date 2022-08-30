@@ -30,7 +30,6 @@ namespace MovieShopMVC.Controllers
             //layers => Layered architecture
             //Onion, Clean Architecture
             var movieDetails = _movieService.GetMovieDetails(id);
-            
 
             return View(movieDetails);
         }

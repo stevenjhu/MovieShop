@@ -79,6 +79,21 @@ namespace Infrastructure.Services
                     Name = genre.Genre.Name
                 });
             }
+            decimal rating = 0;
+            foreach (var review in movieDetails.ReviewsOfMovie)
+            {
+                movieDetailsModel.Reviews.Add(new ReviewModel
+                {
+                    MovieId = review.MovieId,
+                    UserId = review.UserId,
+                    Rating = review.Rating,
+                    CreateDate = review.CreateDate,
+                    ReviewText = review.ReviewText
+                });
+                rating += review.Rating;
+            }
+            rating /= movieDetails.ReviewsOfMovie.Count;
+            movieDetailsModel.Rating = Math.Round(rating,1);
             return movieDetailsModel;
         }
     }

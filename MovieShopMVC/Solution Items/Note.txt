@@ -69,6 +69,21 @@ dotnet tool update --global dotnet-ef
 
 11.
 
+   Register => email/password
+
+   1. public access => home page, movie details page, cast details, login, register
+   2. customer access (loged in) => view/edit profile, purchase movie, review/rating, favorite
+   3. Admin Access (user loged in and have role of admin) => create movie, create cast, get most purchased movie
+
+   Register
+    email               password           Salt
+ U1 abc@abc.com         (Pas##4HKLtt   + adfafafdafdaf)         Hashing - Pdbk/Bcrypt  => fhddghdgdtrhyrety456456y45
+ U2 xyz@abc.com         (Pas##4HKLtt   + hfhhgdhgdfhggds)       Hashing - Pdbk/Bcrypt  => dfhgbdfgdfgfdsg789sfdugdsfghi
+
+ Login
+ select * from Users where email = abc@abc.com
+ U1 abc@abc.com         (Pas##4HKLtt +  adfafafdafdaf) Hashing - Pdbk/Bcrypt  => fhddghdgdtrhyrety456456y45 == fhddghdgdtrhyrety456456y45
+
 Salt: unique generated hash value that is added to the password to make the hashed password unique. 
 (Even if two passwords are the same, because the salt of two users are never the same, the passwords will always be different)
 To check password, redo conversion of input password to hashed password with salt, and then compared with stored hashed password to authenticate user

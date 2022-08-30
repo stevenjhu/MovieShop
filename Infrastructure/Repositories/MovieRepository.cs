@@ -20,10 +20,11 @@ namespace Infrastructure.Repositories
         }
         public Movie GetById(int id)
         {
-            //select * from movie where id = 1 join genre, cast, moviegenre, moviecast
+            //select * from movie where id = 1 join genre, cast, moviegenre, moviecast, rating
             var movieDetails = _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre)
                 .Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
+                .Include(m =>m.ReviewsOfMovie)
                 .Include(m => m.Trailers)
                 .FirstOrDefault(m=>m.Id==id);
             return movieDetails;
