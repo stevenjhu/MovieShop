@@ -101,5 +101,5 @@ QUESTION:
 (e.g. id first, then controller)
 Ans: as long as the pattern is human-friendly, meaning it is logical enough to understand what the url means, any amount of patterns can be created (in controllers)
 2. What does .HasDefaultValue(9.9m)  means?
-3. How do we map column from string to uniqueidentifier?
+3. How do we map column from string to uniqueidentifier? GUID type in C#
 

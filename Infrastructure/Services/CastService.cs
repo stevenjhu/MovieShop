@@ -12,7 +12,6 @@ namespace Infrastructure.Services
     public class CastService : ICastService
     {
         private readonly ICastRepository _castRepository;
-        private readonly IMovieRepository _movieRepository;
         public CastService(ICastRepository castRepository)
         {
             _castRepository = castRepository;
@@ -20,7 +19,7 @@ namespace Infrastructure.Services
 
         public async Task<CastDetailsModel> GetCastDetails(int castId)
         {
-            var castDetails = await _castRepository.GetById(castId);
+            var castDetails = await _castRepository.GetById(castId); //type Cast
             var castDetailsModel = new CastDetailsModel
             {
                 Id = castDetails.Id,
@@ -29,13 +28,13 @@ namespace Infrastructure.Services
                 ProfilePath = castDetails.ProfilePath,
                 TmdbUrl = castDetails.TmdbUrl,
             };
-            foreach (var movie in castDetailsModel.MoviesOfCast)
+            foreach (var movieCast in castDetails.MoviesOfCast)
             {
                 castDetailsModel.MoviesOfCast.Add(new MovieCardModel
                 {
-                    Id = movie.Id,
-                    Title = movie.Title,
-                    PosterUrl = movie.PosterUrl
+                    Id = movieCast.Movie.Id,
+                    Title = movieCast.Movie.Title,
+                    PosterUrl = movieCast.Movie.PosterUrl
                 });
             }
             return castDetailsModel;

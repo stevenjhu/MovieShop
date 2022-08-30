@@ -21,10 +21,9 @@ namespace Infrastructure.Repositories
         public async Task<Cast> GetById(int id)
         {
             var castDetails = await _movieShopDbContext.Casts
-                .Include(m => m.MoviesOfCast)
+                .Include(m => m.MoviesOfCast).ThenInclude(m=>m.Movie)
                 .FirstOrDefaultAsync(m=>m.Id==id);
             return castDetails;
-
         }
     }
 }

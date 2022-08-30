@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        async Task<List<Movie>> IMovieRepository.GetTop30GrossingMovies()
+        public async Task<List<Movie>> GetTop30GrossingMovies()
         {
             //call the database with EF Core and get the data
             //use MovieShopDbContext and Movies DbSet

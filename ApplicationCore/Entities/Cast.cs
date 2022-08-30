@@ -14,7 +14,7 @@ namespace ApplicationCore.Entities
         public string Name { get; set; } = null!;
         public string ProfilePath { get; set; } = null!;
         public string TmdbUrl { get; set; } = null!;
-        public ICollection<MovieCardModel> MoviesOfCast { get; set; }
+        public ICollection<MovieCast> MoviesOfCast { get; set; }
 
     }
 }

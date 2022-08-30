@@ -19,14 +19,14 @@ namespace Infrastructure.Services
             _movieRepository = movieRepository;
         }
 
-        public async Task<List<MovieCardModel>> GetTop30GrossingMovies()
+        public async Task<List<MovieCastModel>> GetTop30GrossingMovies()
         {
             var movies = await _movieRepository.GetTop30GrossingMovies();
 
-            var movieCards = new List<MovieCardModel>();
+            var movieCards = new List<MovieCastModel>();
             foreach (var movie in movies)
             {
-                movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+                movieCards.Add(new MovieCastModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
             }
 
             return movieCards;
