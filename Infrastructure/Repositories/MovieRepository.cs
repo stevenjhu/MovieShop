@@ -18,30 +18,30 @@ namespace Infrastructure.Repositories
         {
             _movieShopDbContext = dbContext;
         }
-        public Movie GetById(int id)
+        public async Task<Movie> GetById(int id)
         {
             //select * from movie where id = 1 join genre, cast, moviegenre, moviecast, rating
-            var movieDetails = _movieShopDbContext.Movies
+            var movieDetails = await _movieShopDbContext.Movies
                 .Include(m => m.GenresOfMovie).ThenInclude(m => m.Genre)
                 .Include(m => m.CastsOfMovie).ThenInclude(m => m.Cast)
                 .Include(m =>m.ReviewsOfMovie)
                 .Include(m => m.Trailers)
-                .FirstOrDefault(m=>m.Id==id);
+                .FirstOrDefaultAsync(m=>m.Id==id);
             return movieDetails;
         }
 
-        Movie IMovieRepository.GetByGenre(string genre)
+        public async Task<Movie> GetByGenre(string genre)
         {
             throw new NotImplementedException();
         }
 
-        List<Movie> IMovieRepository.GetTop30GrossingMovies()
+        async Task<List<Movie>> IMovieRepository.GetTop30GrossingMovies()
         {
             //call the database with EF Core and get the data
             //use MovieShopDbContext and Movies DbSet
             //select top 30 * from Movies order by Revenue
             //corresponding LINQ Query
-            var movies = _movieShopDbContext.Movies.OrderBy(m => m.Revenue).Take(30).ToList();
+            var movies = await _movieShopDbContext.Movies.OrderBy(m => m.Revenue).Take(30).ToListAsync();
             return movies;
         }
     }
