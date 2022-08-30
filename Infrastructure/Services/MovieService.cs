@@ -78,7 +78,7 @@ namespace Infrastructure.Services
                     Name = genre.Genre.Name
                 });
             }
-            decimal rating = 0;
+            decimal? rating = 0;
             foreach (var review in movieDetails.ReviewsOfMovie)
             {
                 movieDetailsModel.Reviews.Add(new ReviewModel
@@ -91,8 +91,15 @@ namespace Infrastructure.Services
                 });
                 rating += review.Rating;
             }
-            rating /= movieDetails.ReviewsOfMovie.Count;
-            movieDetailsModel.Rating = Math.Round(rating,1);
+            try
+            {
+                rating /= movieDetails.ReviewsOfMovie.Count;
+            }
+            catch (DivideByZeroException e)
+            {
+                rating = null;
+            }
+            movieDetailsModel.Rating = rating != null ? Math.Round(rating.Value, 1):null;
             return movieDetailsModel;
         }
     }
