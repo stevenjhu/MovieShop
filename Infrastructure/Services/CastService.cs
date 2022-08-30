@@ -29,15 +29,13 @@ namespace Infrastructure.Services
                 ProfilePath = castDetails.ProfilePath,
                 TmdbUrl = castDetails.TmdbUrl,
             };
-            foreach (var cast in castDetails.MoviesOfCast)
+            foreach (var movie in castDetailsModel.MoviesOfCast)
             {
-                var movieDetails = await _movieRepository.GetById(cast.MovieId);
-                castDetailsModel.MoviesOfCast.Add(new MovieCastModel
+                castDetailsModel.MoviesOfCast.Add(new MovieCardModel
                 {
-                    MovieId = cast.MovieId,
-                    CastId = cast.CastId,
-                    Title = movieDetails.Title,
-                    PosterUrl = movieDetails.PosterUrl
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    PosterUrl = movie.PosterUrl
                 });
             }
             return castDetailsModel;

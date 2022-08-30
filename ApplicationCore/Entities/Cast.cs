@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace ApplicationCore.Entities
         public string Name { get; set; } = null!;
         public string ProfilePath { get; set; } = null!;
         public string TmdbUrl { get; set; } = null!;
-        public ICollection<MovieCast> MoviesOfCast { get; set; }
+        public ICollection<MovieCardModel> MoviesOfCast { get; set; }
 
     }
 }
