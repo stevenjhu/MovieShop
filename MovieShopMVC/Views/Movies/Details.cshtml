@@ -19,18 +19,6 @@
                     <p class="text-secondary fw-bold h-100">@Model.RunTime m | @(Model.ReleaseDate != null ? Model.ReleaseDate.Value.Year : 9999)</p>
                 </div>
                 <div class="col h-10 justify-content-end">
-                    @*<ul class="list-group-horizontal border-0">
-                        @foreach (var genre in Model.Genres)
-                        {
-                            <li class="list-group-item">
-                                <h6>
-                                    <span class="badge bg-secondary rounded-pill">
-                                        @genre.Name
-                                    </span>
-                                </h6>
-                            </li>
-                        }
-                    </ul>*@
                     @foreach (var genre in Model.Genres)
                     {
                         <span class="badge bg-secondary rounded-pill">
@@ -118,7 +106,21 @@
                 </div>
             </div>
             <div class="flex-row d-flex justify-content-center">
-                <button class="btn btn-secondary w-100" type="button">Buy $@Model.Price</button>
+                <button class="btn btn-secondary w-100" type="button" data-bs-toggle="modal" data-bs-target="#purchaseModal">Buy $@Model.Price</button>
+                <div class="modal fade text-black" id="purchaseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="purchaseModalLabel">Purchase this Movie?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body d-flex justify-content-center">
+                        <a href="https://www.paypal.com/signin" target="_blank" class="btn btn-primary" tabindex="-1" role="button">Login to Paypal</a>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
             </div>
             
         </div>
