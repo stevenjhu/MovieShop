@@ -17,7 +17,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             //go to db and get the movie info by movid id
             //and send the data(Model) to the view
@@ -29,8 +29,7 @@ namespace MovieShopMVC.Controllers
             //Code is Maintenable, Reusable, Readable, Extensible, Testable
             //layers => Layered architecture
             //Onion, Clean Architecture
-            var movieDetails = _movieService.GetMovieDetails(id);
-
+            var movieDetails = await _movieService.GetMovieDetails(id);
             return View(movieDetails);
         }
     }

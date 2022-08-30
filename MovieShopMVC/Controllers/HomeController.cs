@@ -18,7 +18,7 @@ namespace MovieShopMVC.Controllers
         }
 
         // Action methods
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
             // go to database and get the data
@@ -26,7 +26,7 @@ namespace MovieShopMVC.Controllers
             // losely coupled code
             // 
 
-            var movies = _movieService.GetTop30GrossingMovies();
+            var movies = await _movieService.GetTop30GrossingMovies();
 
             // 3 ways we can send the data from controller/action method to views
             // ViewBag
