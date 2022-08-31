@@ -11,6 +11,6 @@ namespace ApplicationCore.Contracts.Repository
     {
         Task<List<Movie>> GetTop30GrossingMovies();
         Task<Movie> GetById(int id);
-        Task<Movie> GetByGenre(string genre);
+        Task<List<Movie>> GetMoviesByGenre(int genreId);
     }
 }

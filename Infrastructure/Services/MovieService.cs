@@ -32,6 +32,13 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
+        public async Task<MovieDetailsModel> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
+            //var movieDetailsModel = await _movieRepository.GetById(movieId);
+            //return movieDetailsModel;
+        }
+
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)
         {
             var movieDetails = await _movieRepository.GetById(movieId);
@@ -102,5 +109,7 @@ namespace Infrastructure.Services
             movieDetailsModel.Rating = rating != null ? Math.Round(rating.Value, 1):null;
             return movieDetailsModel;
         }
+
+        
     }
 }

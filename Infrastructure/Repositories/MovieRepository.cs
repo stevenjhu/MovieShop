@@ -30,9 +30,11 @@ namespace Infrastructure.Repositories
             return movieDetails;
         }
 
-        public async Task<Movie> GetByGenre(string genre)
+        public async Task<List<Movie>> GetMoviesByGenre(int genreId)
         {
-            throw new NotImplementedException();
+            var movieGenre = await _movieShopDbContext.MovieGenres.FirstOrDefaultAsync(m => m.GenreId == genreId);
+            var movies = await _movieShopDbContext.Movies.Where(m => m.GenresOfMovie.Contains(movieGenre)).ToListAsync();
+            return movies;
         }
 
         public async Task<List<Movie>> GetTop30GrossingMovies()
