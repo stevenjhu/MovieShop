@@ -14,6 +14,8 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<ICastService, CastService>();
 builder.Services.AddScoped<ICastRepository, CastRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddDbContext<MovieShopDbContext>(options => options.UseSqlServer
     (builder.Configuration.GetConnectionString("MovieShopDbConnection")));
@@ -39,6 +41,7 @@ app.MapControllerRoute(
     name: "default",
     //controls the default/main home page
     pattern: "{controller=Home}/{action=Index}/{id?}"); 
+    //pattern: "{controller=Movie}/{action=MoviesByGenre}/{id}/{pageSize}/{pageNumber}");
 
     //debug
     //pattern: "{controller=Movies}/{action=Details}/{id?}");

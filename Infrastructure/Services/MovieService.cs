@@ -32,11 +32,15 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public async Task<MovieDetailsModel> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
+        public async Task<List<MovieCardModel>> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
         {
-            throw new NotImplementedException();
-            //var movieDetailsModel = await _movieRepository.GetById(movieId);
-            //return movieDetailsModel;
+            var movies = await _movieRepository.GetMoviesByGenre(genreId,pageSize,pageNumber);
+            var movieCards = new List<MovieCardModel>();
+            foreach (var movie in movies)
+            {
+                movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+            }
+            return movieCards;
         }
 
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)

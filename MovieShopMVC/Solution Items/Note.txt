@@ -96,6 +96,30 @@ TO-DO:
 2. Sign into Azure portal
 3. Read materials in LMS
 
+Cloud Application
+1. Scalblility
+
+Buy server from Azure/AWS VM
+Pro: Pay as you go
+Con: Depedent on Service Provider
+
+Commonly Used Azure Service:
+- Azure Dev OPS CI/CD
+- Azure App Service => ASP.NET App, Java, Python
+- Azure Static Web App => Angular, React, JS HTML CSS
+- Azure Function => Scheduled Services, Services, Serveless Functions
+- Azure Blob Storage => images, videos, files - invoices, resumes, documents
+- Azure SQL => SQL Server, Postgres SQL, MySQL
+- Azure Cosmos => NoSQL from Microsoft
+- Azure Cognitive Services => Speech, Text analysis, sentiment, Face API
+
+Dev OPs
+Developer + Operations
+
+CI: Continuous Integration
+
+CD: Continuous Delivery
+
 QUESTION:
 1. Compositional order of the url is strictly syntatical or conventional? 
 (e.g. id first, then controller)

@@ -30,10 +30,10 @@ namespace Infrastructure.Repositories
             return movieDetails;
         }
 
-        public async Task<List<Movie>> GetMoviesByGenre(int genreId)
+        public async Task<List<Movie>> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
         {
             var movieGenre = await _movieShopDbContext.MovieGenres.FirstOrDefaultAsync(m => m.GenreId == genreId);
-            var movies = await _movieShopDbContext.Movies.Where(m => m.GenresOfMovie.Contains(movieGenre)).ToListAsync();
+            var movies = await _movieShopDbContext.Movies.Where(m => m.GenresOfMovie.Contains(movieGenre)).Skip(pageSize*(pageNumber-1)).Take(pageSize).ToListAsync();
             return movies;
         }
 

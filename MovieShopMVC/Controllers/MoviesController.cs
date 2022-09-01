@@ -32,11 +32,12 @@ namespace MovieShopMVC.Controllers
             var movieDetails = await _movieService.GetMovieDetails(id);
             return View(movieDetails);
         }
+
         [HttpGet]
         public async Task<IActionResult> MoviesByGenre(int genreId, int pageSize = 30, int pageNumber = 1)
         {
-            var movieDetails = await _movieService.GetMoviesByGenre(genreId, pageSize, pageNumber);
-            return PartialView(movieDetails);
+            var paginatedResultSet = await _movieService.GetMoviesByGenre(genreId, pageSize, pageNumber);
+            return PartialView(paginatedResultSet);
         }
     }
 }
