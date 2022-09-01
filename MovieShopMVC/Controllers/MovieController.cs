@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MovieShopMVC.Controllers
 {
-    public class MoviesController : Controller
+    public class MovieController : Controller
     {
 
-        //public MoviesController(IMovieService movieService)
+        //public MovieController(IMovieService movieService)
         //{
         //    _movieService = movieService;
         //}
         private readonly IMovieService _movieService;
-        public MoviesController(IMovieService movieService)
+        public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
         }
@@ -37,7 +37,7 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> MoviesByGenre(int genreId, int pageSize = 30, int pageNumber = 1)
         {
             var paginatedResultSet = await _movieService.GetMoviesByGenre(genreId, pageSize, pageNumber);
-            return PartialView(paginatedResultSet);
+            return View(paginatedResultSet);
         }
     }
 }

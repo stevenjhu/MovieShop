@@ -22,7 +22,7 @@
                 @foreach (var card in Model.MoviesOfCast)
                 {
                     <div class="col-2">        
-                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@card.Id">
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@card.Id">
                                 <div class="card card-img text-center h-100">
                                     <img src="@card.PosterUrl" class="img-fluid" alt="@card.Title" />
                                     <h4 class="mt-1">@card.Title</h4>

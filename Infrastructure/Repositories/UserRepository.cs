@@ -18,17 +18,70 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
+        public async Task<User> GetUserById(int userid)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userid);
+            return user;
+        }
+
         public async Task<User> AddUser(User user)
         {
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
             return user;
         }
-
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<Favorite> AddFavorite(Favorite favorite)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-            return user;
+            _dbContext.Favorites.Add(favorite);
+            await _dbContext.SaveChangesAsync();
+            return favorite;
+        }
+        public async Task<bool> FavoriteExists(Favorite favorite)
+        {
+            var dbFavorite = await _dbContext.Favorites.FirstOrDefaultAsync(u => u.MovieId == favorite.MovieId && u.UserId == favorite.UserId);
+            if (dbFavorite == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        public async Task RemoveFavorite(Favorite favorite)
+        {
+            _dbContext.Favorites.Remove(favorite);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> ReviewExists(Review review)
+        {
+            var dbReview = await _dbContext.Reviews.FirstOrDefaultAsync(u => u.UserId == review.UserId && u.MovieId == review.MovieId);
+            var exist = dbReview == null ? false : true;
+            return exist;
+        }
+
+        public async Task<Review> AddReview(Review review)
+        {
+            _dbContext.Reviews.Add(review);
+            await _dbContext.SaveChangesAsync();
+            return review;
+        }
+
+        public async Task UpdateReview(Review review)
+        {
+            var dbReview = await _dbContext.Reviews.FirstOrDefaultAsync(u => u.UserId == review.UserId && u.MovieId == review.MovieId);
+            dbReview.Rating = review.Rating;
+            dbReview.ReviewText = review.ReviewText;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveReview(Review review)
+        {
+            _dbContext.Reviews.Remove(review);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

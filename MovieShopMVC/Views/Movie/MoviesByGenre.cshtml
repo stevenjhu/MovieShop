@@ -1,0 +1,13 @@
+﻿@model List<ApplicationCore.Models.MovieCardModel>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+@*Display 30 movies by genre *@
+
+<div>  
+    @{  
+        Html.RenderPartial("_MovieCard");  
+    }  
+</div> 
