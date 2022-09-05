@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,12 @@ namespace ApplicationCore.Models
 {
     public class PurchaseRequestModel
     {
-
+        public int MovieId { get; set; }
+        public int UserId { get; set; }
+        public DateTime PurchaseDateTime { get; set; }
+        public Guid PurchaseNumber { get; set; }
+        public decimal TotalPrice { get; set; }
+        public Movie Movie { get; set; }
+        public User User { get; set; }
     }
 }

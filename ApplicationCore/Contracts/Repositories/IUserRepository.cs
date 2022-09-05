@@ -19,6 +19,10 @@ namespace ApplicationCore.Contracts.Repository
         Task UpdateReview(Review review);
         Task RemoveReview(Review review);
         Task<bool> ReviewExists(Review review);
+        Task<List<Favorite>> GetFavoritesById(int userId);
+        Task<List<Purchase>> GetPurchasesById(int userId);
+        Task<List<Review>> GetReviewsById(int userId);
+
 
     }
 }

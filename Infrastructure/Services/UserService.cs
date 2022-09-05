@@ -99,23 +99,60 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task GetAllFavoritesForUser(int id)
+        public async Task<List<MovieCardModel>> GetAllFavoritesForUser(int userId)
         {
-            throw new NotImplementedException();
+            var favorites = await _userRepository.GetFavoritesById(userId);
+            List<MovieCardModel> movieCards = new List<MovieCardModel>();
+            foreach (var favorite in favorites)
+            {
+                var newCard = new MovieCardModel
+                {
+                    Id = favorite.MovieId,
+                    PosterUrl = favorite.Movie.PosterUrl,
+                    Title = favorite.Movie.Title
+                };
+                movieCards.Add(newCard);
+            }
+            return movieCards;
         }
 
-        public async Task GetAllPurchasesForUser(int id)
+        public async Task<List<MovieCardModel>> GetAllPurchasesForUser(int id)
         {
-            throw new NotImplementedException();
+            var purchases = await _userRepository.GetPurchasesById(id);
+            List<MovieCardModel> movieCards = new List<MovieCardModel>();
+            foreach (var purchase in purchases)
+            {
+                var newCard = new MovieCardModel
+                {
+                    Id = purchase.MovieId,
+                    PosterUrl = purchase.Movie.PosterUrl,
+                    Title = purchase.Movie.Title
+                };
+                movieCards.Add(newCard);
+            }
+            return movieCards;
         }
 
-        public async Task GetAllReviewsByUser(int id)
+        public async Task<List<ReviewRequestModel>> GetAllReviewsByUser(int id)
         {
-            throw new NotImplementedException();
+            var reviews = await _userRepository.GetReviewsById(id);
+            List<ReviewRequestModel> reviewRequestModels = new List<ReviewRequestModel>();
+            foreach (var review in reviews)
+            {
+                reviewRequestModels.Add(new ReviewRequestModel
+                {
+                    MovieId = review.MovieId,
+                    UserId = review.UserId,
+                    Rating = review.Rating,
+                    ReviewText = review.ReviewText
+                });
+            }
+            return reviewRequestModels;
         }
 
-        public async Task GetPurchasesDetails(int userId, int movieId)
+        public async Task<PurchaseRequestModel> GetPurchasesDetails(int userId, int movieId)
         {
+            //var movieDetails = await _userRepository.
             throw new NotImplementedException();
         }
 
