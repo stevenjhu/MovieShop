@@ -8,6 +8,14 @@ namespace ApplicationCore.Models
 {
     public class ReviewRequestModel
     {
+        public ReviewRequestModel(int movieId, int userId, decimal rating, string reviewText)
+        {
+            this.MovieId = movieId;
+            this.UserId = userId;
+            this.Rating = rating;
+            this.ReviewText = reviewText;
+        }
+        
         public int MovieId { get; set; }
         public int UserId { get; set; }
         public decimal Rating { get; set; }

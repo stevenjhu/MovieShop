@@ -24,7 +24,7 @@ namespace MovieShopMVC.Controllers
             var userSuccess = await _accountService.ValidateUser(model);
             if (userSuccess != null && userSuccess.Id > 0)
             {
-                // pasword matches
+                // password matches
                 // redirect to home page
                 return LocalRedirect("~/");
             }

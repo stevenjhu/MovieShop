@@ -90,7 +90,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.MovieRequested", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,7 +329,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Trailers");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.User", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.UserRequested", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,21 +398,21 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationCore.Entities.Favorite", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("FavoritesOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.User", "User")
+                    b.HasOne("ApplicationCore.Entities.UserRequested", "UserRequested")
                         .WithMany("FavoritesOfUser")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
 
-                    b.Navigation("User");
+                    b.Navigation("UserRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.MovieCast", b =>
@@ -423,7 +423,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("CastsOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -431,7 +431,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Cast");
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.MovieGenre", b =>
@@ -442,7 +442,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("GenresOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -450,54 +450,54 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Genre");
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Purchase", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("PurchasesOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.User", "User")
+                    b.HasOne("ApplicationCore.Entities.UserRequested", "UserRequested")
                         .WithMany("PurchasesOfUser")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
 
-                    b.Navigation("User");
+                    b.Navigation("UserRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Review", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("ReviewsOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.User", null)
+                    b.HasOne("ApplicationCore.Entities.UserRequested", null)
                         .WithMany("ReviewsOfUser")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("Trailers")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.UserRole", b =>
@@ -508,7 +508,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.User", "User")
+                    b.HasOne("ApplicationCore.Entities.UserRequested", "UserRequested")
                         .WithMany("UserRoleOfUser")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -516,7 +516,7 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Role");
 
-                    b.Navigation("User");
+                    b.Navigation("UserRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Cast", b =>
@@ -529,7 +529,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("MoviesOfGenre");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.MovieRequested", b =>
                 {
                     b.Navigation("CastsOfMovie");
 
@@ -549,7 +549,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("UserRolesOfRoles");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.User", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.UserRequested", b =>
                 {
                     b.Navigation("FavoritesOfUser");
 

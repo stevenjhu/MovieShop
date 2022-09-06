@@ -42,7 +42,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.MovieRequested", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,7 +191,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("GenresOfMovie")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -199,18 +199,18 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Genre");
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
                 {
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                    b.HasOne("ApplicationCore.Entities.MovieRequested", "MovieRequested")
                         .WithMany("Trailers")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.Navigation("MovieRequested");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Genre", b =>
@@ -218,7 +218,7 @@ namespace Infrastructure.Migrations
                     b.Navigation("MoviesOfGenre");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
+            modelBuilder.Entity("ApplicationCore.Entities.MovieRequested", b =>
                 {
                     b.Navigation("GenresOfMovie");
 

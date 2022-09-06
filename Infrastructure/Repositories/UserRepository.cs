@@ -108,5 +108,29 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
             return reviews;
         }
+
+        public async Task<Purchase> GetPurchasesDetailByUserAndMovieId(int userId, int movieId)
+        {
+            var purchaseDetails = await _dbContext.Purchases
+                .Include(u => u.Movie)
+                .Include(u => u.User)
+                .Where(u => u.UserId == userId && u.MovieId == movieId)
+                .FirstOrDefaultAsync();
+            return purchaseDetails;
+        }
+
+        public async Task<Purchase> PurchaseExists(int userId, int movieId)
+        {
+            var purchase = await _dbContext.Purchases
+                .Where(u => u.UserId == userId && u.MovieId == movieId)
+                .FirstOrDefaultAsync();
+            return purchase;
+        }
+
+        public async Task AddPurchase(Purchase purchase)
+        {
+            _dbContext.Purchases.Add(purchase);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

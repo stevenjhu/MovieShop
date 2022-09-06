@@ -139,31 +139,63 @@ namespace Infrastructure.Services
             List<ReviewRequestModel> reviewRequestModels = new List<ReviewRequestModel>();
             foreach (var review in reviews)
             {
-                reviewRequestModels.Add(new ReviewRequestModel
-                {
-                    MovieId = review.MovieId,
-                    UserId = review.UserId,
-                    Rating = review.Rating,
-                    ReviewText = review.ReviewText
-                });
+                reviewRequestModels.Add(new ReviewRequestModel(review.MovieId, review.UserId, review.Rating, review.ReviewText));
+                
             }
             return reviewRequestModels;
         }
 
-        public async Task<PurchaseRequestModel> GetPurchasesDetails(int userId, int movieId)
+        public async Task<PurchaseDetailsModel> GetPurchasesDetails(int userId, int movieId)
         {
-            //var movieDetails = await _userRepository.
-            throw new NotImplementedException();
+            var purchaseDetails = await _userRepository.GetPurchasesDetailByUserAndMovieId(userId, movieId);
+            PurchaseDetailsModel purchaseRequestDetails;
+            try
+            {
+                purchaseRequestDetails = new PurchaseDetailsModel
+                {
+                    MovieId = purchaseDetails.MovieId,
+                    UserId = purchaseDetails.UserId,
+                    PurchaseDateTime = purchaseDetails.PurchaseDateTime,
+                    PurchaseNumber = purchaseDetails.PurchaseNumber,
+                    TotalPrice = purchaseDetails.TotalPrice,
+                    MovieRequested = purchaseDetails.Movie,
+                    UserRequested = purchaseDetails.User
+                };
+            }
+            catch (NullReferenceException e)
+            {
+                purchaseRequestDetails = null;
+            }
+            return purchaseRequestDetails;
         }
 
-        public async Task IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
+        public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
         {
-            throw new NotImplementedException();
+            var dbPurchase = await _userRepository.PurchaseExists(purchaseRequest.MovieId, userId);
+            return dbPurchase == null ? false : true;
         }
 
-        public async Task PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
+        public async Task<PurchaseDetailsModel> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
         {
-            throw new NotImplementedException();
+            var purchaseDetails = await GetPurchasesDetails(purchaseRequest.UserId, purchaseRequest.UserId);
+            Purchase dbPurchase;
+            if (purchaseDetails == null)
+            {
+                dbPurchase = new Purchase
+                {
+                    MovieId = purchaseDetails.MovieId,
+                    UserId = purchaseDetails.UserId,
+                    PurchaseDateTime = DateTime.Now,
+                    PurchaseNumber = Guid.NewGuid(),
+                    TotalPrice = purchaseDetails.MovieRequested.Price.Value
+                };
+            }
+            else
+            {
+                throw new Exception("Movie Already purchased");
+            }
+            await _userRepository.AddPurchase(dbPurchase);
+            return purchaseDetails;
         }
     }
 }

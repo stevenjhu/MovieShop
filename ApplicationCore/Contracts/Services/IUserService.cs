@@ -10,10 +10,10 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IUserService
     {
-        Task PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId);
-        Task IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId);
+        Task<PurchaseDetailsModel> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId);
+        Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId);
         Task<List<MovieCardModel>> GetAllPurchasesForUser(int id);
-        Task<PurchaseRequestModel> GetPurchasesDetails(int userId, int movieId);
+        Task<PurchaseDetailsModel> GetPurchasesDetails(int userId, int movieId);
         Task AddFavorite(FavoriteRequestModel favoriteRequest);
         Task RemoveFavorite(FavoriteRequestModel favoriteRequest);
         Task<bool> FavoriteExists(int id, int movieId);

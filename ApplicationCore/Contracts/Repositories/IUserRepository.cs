@@ -22,7 +22,9 @@ namespace ApplicationCore.Contracts.Repository
         Task<List<Favorite>> GetFavoritesById(int userId);
         Task<List<Purchase>> GetPurchasesById(int userId);
         Task<List<Review>> GetReviewsById(int userId);
-
-
+        Task<Purchase> GetPurchasesDetailByUserAndMovieId(int userId, int movieId);
+        Task<Purchase> PurchaseExists(int userId, int movieId);
+        Task AddPurchase(Purchase purchase);
+        
     }
 }
