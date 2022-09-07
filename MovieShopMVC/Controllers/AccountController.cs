@@ -45,7 +45,7 @@ namespace MovieShopMVC.Controllers
 
                 return LocalRedirect("~/");
             }
-            return View();
+            return RedirectToAction("Register");
         }
 
         [HttpGet]
@@ -66,7 +66,7 @@ namespace MovieShopMVC.Controllers
         {
             var userId = await _accountService.RegisterUser(model);
 
-            if (userId > 0)
+            if (userId == 0)
             {
                 // redirect to login page
                 return RedirectToAction("Login");

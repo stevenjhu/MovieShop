@@ -27,7 +27,7 @@ namespace Infrastructure.Services
             var user = await _userRepository.GetUserByEmail(model.Email);
             if (user != null)
             {
-                throw new Exception("Email already exists, try to login");
+                return 0;
             }
             //create a random salt
             //hash the password with the salt created in above step
@@ -53,7 +53,7 @@ namespace Infrastructure.Services
             var user = await _userRepository.GetUserByEmail(model.Email);
             if (user == null)
             {
-                throw new Exception("Email does not exixts, try to register first");
+                return null;
             }
 
             var hashedPassword = GetHashedPassword(model.Password, user.Salt);

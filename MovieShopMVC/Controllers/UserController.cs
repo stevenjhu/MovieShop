@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Contracts.Services;
+﻿using ApplicationCore.Contracts.Repository;
+using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,14 @@ namespace MovieShopMVC.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
         private readonly ICurrentUser _currentUser;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IUserRepository userRepository, ICurrentUser currentUser)
         {
             _userService = userService;
+            _userRepository = userRepository;
+            _currentUser = currentUser;
         }
 
         [HttpPost]
@@ -73,15 +77,23 @@ namespace MovieShopMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
-            //var userId = _currentUser.UserId;
-            return View();
+            var userId = _currentUser.UserId;
+            var user = await _userRepository.GetUserById(userId);
+            UserEditModel model = new UserEditModel
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth == null ? null : user.DateOfBirth.Value
+            };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditProfile(UserEditModel model)
         {
             //var userId = _currentUser.UserId;
-            return View();
+            return View(model);
         }
     }
 }
