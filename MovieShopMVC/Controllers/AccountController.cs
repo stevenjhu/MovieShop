@@ -1,5 +1,7 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -27,8 +29,21 @@ namespace MovieShopMVC.Controllers
             {
                 // password matches
                 // redirect to home page
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, userSuccess.Email),
+                    new Claim(ClaimTypes.NameIdentifier, userSuccess.Id.ToString()),
+                    new Claim(ClaimTypes.Surname, userSuccess.LastName),
+                    new Claim(ClaimTypes.GivenName, userSuccess.FirstName),
+                    //new Claim("language", "english") key value pair
+                };
+
+                //identity object
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
                 return LocalRedirect("~/");
-                
             }
             return View();
         }
