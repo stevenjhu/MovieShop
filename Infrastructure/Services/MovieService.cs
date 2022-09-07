@@ -13,10 +13,12 @@ namespace Infrastructure.Services
     public class MovieService : IMovieService
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IUserRepository _userRepository;
 
-        public MovieService(IMovieRepository movieRepository)
+        public MovieService(IMovieRepository movieRepository, IUserRepository userRepository)
         {
             _movieRepository = movieRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<List<MovieCardModel>> GetTop30GrossingMovies()
@@ -46,6 +48,8 @@ namespace Infrastructure.Services
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)
         {
             var movieDetails = await _movieRepository.GetById(movieId);
+            var purchased = await _userRepository.PurchaseExists(344, movieId);
+           
             var movieDetailsModel = new MovieDetailsModel
             {
                 Id = movieDetails.Id,
@@ -111,6 +115,11 @@ namespace Infrastructure.Services
                 rating = null;
             }
             movieDetailsModel.Rating = rating != null ? Math.Round(rating.Value, 1):null;
+
+            if (purchased !=null)
+            {
+                movieDetailsModel.IsMoviePurchased = true;
+            }
             return movieDetailsModel;
         }
 

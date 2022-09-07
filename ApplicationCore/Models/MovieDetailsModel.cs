@@ -31,9 +31,13 @@ namespace ApplicationCore.Models
         public decimal? Price { get; set; }
         public decimal? Rating { get; set; }
 
+        public bool IsMoviePurchased { get; set; }
+
         public List<GenreModel> Genres { get; set; }
         public List<TrailerModel> Trailers { get; set; }
         public List<CastModel> Casts { get; set; }
         public List<ReviewModel> Reviews { get; set; }
+        public PurchaseDetailsModel PurchaseDetails { get; set; }
+        public FavoriteModel FavoriteStatus { get; set; }
     }
 }

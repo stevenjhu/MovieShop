@@ -43,16 +43,19 @@ namespace MovieShopMVC.Controllers
             
             return RedirectToAction(actionName: "Details", controllerName: "Movie", routeValues: movieId);
         }
+
+        [HttpGet]
         public async Task<IActionResult> Purchases(int userId)
         {
             var purchases =  await _userService.GetAllPurchasesForUser(userId);
-            return View(); //return all purchased
+            return View("_MovieCard",purchases); //return all purchased
         }
+
+        [HttpGet]
         public async Task<IActionResult> Favorites(int movieId, int userId)
         {
             var favorites = await _userService.GetAllFavoritesForUser(userId);
-            return View(); //return all favorited
-            
+            return View("_MovieCard", favorites); //return all favorited
         }
     }
 }

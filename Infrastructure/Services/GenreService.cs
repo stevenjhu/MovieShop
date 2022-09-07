@@ -9,5 +9,7 @@ namespace Infrastructure.Services
 {
     public class GenreService:IGenreService
     {
+        private readonly IGenreService _genreService;
+        
     }
 }

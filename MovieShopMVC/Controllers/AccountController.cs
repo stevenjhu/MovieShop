@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MovieShopMVC.Controllers
 {
@@ -27,6 +28,7 @@ namespace MovieShopMVC.Controllers
                 // password matches
                 // redirect to home page
                 return LocalRedirect("~/");
+                
             }
             return View();
         }
@@ -49,7 +51,6 @@ namespace MovieShopMVC.Controllers
             }
 
             return View();
-
         }
     }
 }
