@@ -78,6 +78,7 @@ namespace Infrastructure.Data
             builder.Property(m => m.PhoneNumber).HasMaxLength(16);
             builder.Property(m => m.ProfilePictureUrl).HasMaxLength(4096);
             builder.Property(m => m.Salt).HasMaxLength(1024);
+            builder.Property(m => m.DateOfBirth).HasColumnType("date");
         }
 
         private void ConfigureFavorite(EntityTypeBuilder<Favorite> builder)

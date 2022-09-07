@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace ApplicationCore.Entities
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string HashedPassword { get; set; } = null!;
+
+        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
         public string? PhoneNumber { get; set; }
         public string? ProfilePictureUrl { get; set; }

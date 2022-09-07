@@ -32,12 +32,7 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         @*(after login) My Account, My Purchases, My Favorites*@
-                        <li class="nav-item">
-                            <a asp-controller="Account" asp-action="Login" class="rounded-pill btn border-white bg-dark text-white text-decoration-none me-3">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-controller="Account" asp-action="Register" class="rounded-pill btn border-white bg-dark text-white text-decoration-none">Register</a>
-                        </li>
+                        <partial name="_LoginInfoPartial"/>
                     </ul>
                 </div>
             </div>

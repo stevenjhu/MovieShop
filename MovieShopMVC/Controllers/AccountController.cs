@@ -48,6 +48,13 @@ namespace MovieShopMVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
         public IActionResult Register()
         {
             // showing empty register view
@@ -67,5 +74,7 @@ namespace MovieShopMVC.Controllers
 
             return View();
         }
+
+        
     }
 }
