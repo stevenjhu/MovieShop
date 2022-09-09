@@ -101,8 +101,6 @@ namespace MovieShopAPI.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var encodedJwt = tokenHandler.CreateToken(tokenDetails);
             return tokenHandler.WriteToken(encodedJwt);
-
-
         }
     }
 }
