@@ -32,6 +32,7 @@ namespace MovieShopAPI.Controllers
             var user = await _accountService.RegisterUser(model);
             return Ok(user);
         }
+
         [HttpGet]
         [Route("check-email")]
         public async Task<IActionResult> EmailExists ([FromBody] string email)
@@ -42,6 +43,7 @@ namespace MovieShopAPI.Controllers
             else
                 return Ok(user);
         }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
@@ -60,12 +62,14 @@ namespace MovieShopAPI.Controllers
             //IF JWT token is invalid or token is expired, then API will send 401 Unauthorized
             if (login == null)
             {
+                throw new UnauthorizedAccessException("Please check email and password.");
                 return Unauthorized(new { errorMessage = "The credential does not match any record"});
             }
             //create token
             var jwtToken = CreateJWTToken(login);
             return Ok(new { token = jwtToken});
         }
+
         private string CreateJWTToken(UserLoginSuccessModel user)
         {
             //create the claims
