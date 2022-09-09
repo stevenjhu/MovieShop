@@ -49,7 +49,11 @@ namespace Infrastructure.Services
         {
             var movieDetails = await _movieRepository.GetById(movieId);
             var purchased = await _userRepository.PurchaseExists(344, movieId);
-           
+            
+            if(movieDetails == null)
+            {
+                return null;
+            }
             var movieDetailsModel = new MovieDetailsModel
             {
                 Id = movieDetails.Id,
