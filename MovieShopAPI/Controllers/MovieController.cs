@@ -16,6 +16,31 @@ namespace MovieShopAPI.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetMoviesByPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("{movieId:int}")]
+        public async Task<IActionResult> GetMovieDetailsById(int movieId)
+        {
+            var movie = await _movieService.GetMovieDetails(movieId);
+            if (movie == null)
+            {
+                return NotFound(new { errorMessage = $"No Movie Found for {movieId}" });
+            }
+            return Ok(movie);
+        }
+
+        [HttpGet]
+        [Route("top-rated")]
+        public async Task<IActionResult> GetTopRatedMovies()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
         [Route("top-grossing")] //Attribute Routing
         //MVC_Version http://localhost:port/movie/GetTopGrossingMovies => traditional/convention based routing
         //API_Version http://localhost:port/api/movie/top-grossing
@@ -38,15 +63,17 @@ namespace MovieShopAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{movieId:int}")]
-        public async Task<IActionResult> GetMovie(int movieId)
+        [Route("genre/{genreId:int}")]
+        public async Task<IActionResult> GetMoviesByGenre(int genreId)
         {
-            var movie = await _movieService.GetMovieDetails(movieId);
-            if(movie == null)
-            {
-                return NotFound(new { errorMessage = $"No Movie Found for {movieId}" });
-            }
-            return Ok(movie);
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("{movieId:int}/reviews")]
+        public async Task<IActionResult> GetReviewsByMovieId(int movieId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,5 +7,11 @@ namespace MovieShopAPI.Controllers
     [ApiController]
     public class CastController : ControllerBase
     {
+        [HttpGet]
+        [Route("{castId:int}")]
+        public async Task<IActionResult> GetCastDetailsById(int castId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

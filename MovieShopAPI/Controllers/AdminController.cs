@@ -22,5 +22,12 @@ namespace MovieShopAPI.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpGet]
+        [Route("top-purchased-movies")]
+        public async Task<IActionResult> GetTopPurchasedMoviesByDateRange(DateTime fromTime, TimeSpan timeSpan)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

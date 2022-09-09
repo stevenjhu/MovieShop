@@ -7,5 +7,10 @@ namespace MovieShopAPI.Controllers
     [ApiController]
     public class GenreController : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetGenres()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
