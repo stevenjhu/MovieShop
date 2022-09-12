@@ -63,7 +63,7 @@ namespace MovieShopMVC.Controllers
             //httpcontext.user.claims and then call the db and get the info to the view
             var userId = _currentUser.UserId;
             var purchases =  await _userService.GetAllPurchasesForUser(userId);
-            return View("_MovieCard",purchases); //return all purchased
+            return View(purchases); //return all purchased
         }
 
         [HttpGet]
@@ -71,7 +71,7 @@ namespace MovieShopMVC.Controllers
         {
             var userId = _currentUser.UserId;
             var favorites = await _userService.GetAllFavoritesForUser(userId);
-            return View("_MovieCard", favorites); //return all favorited
+            return View(favorites); //return all favorited
         }
 
         [HttpGet]

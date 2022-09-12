@@ -1,4 +1,18 @@
-﻿@model ApplicationCore.Models.MovieDetailsModel
+﻿@using ApplicationCore.Contracts.Services
+@using ApplicationCore.Models
+@using MovieShopMVC.Infra
+@model ApplicationCore.Models.MovieDetailsModel
+@inject IUserService userService
+@inject ICurrentUser currentUser
+@{
+    PurchaseRequestModel purchaseRequestModel;
+    bool? isPurchased;
+    if (currentUser.IsAuthenticated)
+    {
+        purchaseRequestModel = new PurchaseRequestModel (Model.Id, currentUser.UserId);
+        isPurchased = await userService.IsMoviePurchased(purchaseRequestModel,currentUser.UserId);
+    }
+}
 
 <div class="container-fluid">
     <div class="row bg-dark text-white" id="movie_title">
@@ -44,21 +58,32 @@
         </div>
        @*review and buy*@
         <div class="col-2 justify-content-center pt-5">
+            @*review*@
             <div class="flex-row d-flex justify-content-center mb-4">
                 <style>
-                    #reviewButton{
+                    #reviewButton,reviewButtonLogout{
                         border-color:white;
                         color:white
                     }
                 </style>
-                <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#reviewModal" id="reviewButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                    </svg>
-                    Review
-                </button>
-                
+                @if (!currentUser.IsAuthenticated)
+                {
+                    <a class="btn btn-outline-primary w-100" type="button" asp-controller="Account" asp-action="Login" id="reviewButtonLogout">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        Write a Review
+                    </a>
+                }else{
+                    <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#reviewModal" id="reviewButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        Write a Review
+                    </button>
+                }
                 <div class="modal fade text-black" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -97,8 +122,16 @@
                   </div>
                 </div>
             </div>
+            @*purchase*@
             <div class="flex-row d-flex justify-content-center mb-4">
-                <button class="btn btn-light w-100" type="button" data-bs-toggle="modal" data-bs-target="#purchaseModal">Buy $@Model.Price</button>
+                @if (!currentUser.IsAuthenticated)
+                {
+                    <a class="btn btn-light w-100" type="button" asp-controller="Account" asp-action="Login">Buy $@Model.Price</a>
+                }
+                else
+                {
+                    <button class="btn btn-light w-100" type="button" data-bs-toggle="modal" data-bs-target="#purchaseModal">Buy $@Model.Price</button>
+                }
                 <div class="modal fade text-black" id="purchaseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -117,15 +150,29 @@
                   </div>
                 </div>
             </div>
+            @*favorite*@
             <div class="flex-row d-flex justify-content-center mb-4">
-                <button class="btn btn-outline-primary w-100" type="button" id="favoriteButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                    </svg>
-                    Favorite
-                </button>
+                @if (!currentUser.IsAuthenticated)
+                {
+                    <a class="btn btn-outline-primary w-100" type="button" asp-controller="Account" asp-action="Login" id="favoriteButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                        Favorite
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-outline-primary w-100" type="button" id="favoriteButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                        Favorite
+                    </button>
+                }
             </div>
         </div>
+        @*review and buy section end*@
     </div>
     <div class="row pt-2" id="movie_content">
         <div class="col-5 bg-light">
