@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Contracts.Repository
+namespace ApplicationCore.Contracts.Repositories
 {
     public interface IPurchaseRepository
     {

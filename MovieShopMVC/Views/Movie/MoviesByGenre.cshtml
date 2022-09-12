@@ -1,4 +1,5 @@
-﻿@model List<ApplicationCore.Models.MovieCardModel>
+﻿@using ApplicationCore.Models
+@model PagedResultSet<MovieCardModel>
 
 @{
     ViewData["Title"] = "Movies";
@@ -6,8 +7,24 @@
 
 @*Display 30 movies by genre *@
 
-<div>  
-    @{  
-        Html.RenderPartial("_MovieCard");  
-    }  
-</div> 
+<div class="rounded">
+    <div class="container-fluid">
+        <div class="row">
+
+            @foreach (var movieCard in Model?.Data)
+            {
+                <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
+                    <partial name="_MovieCard" model="movieCard" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="MoviesByGenre" asp-route-page="@(Model.PageIndex-1)" class="btn btn-primary @prevDisabled" >Previous</a>
+<a asp-action="MoviesByGenre" asp-route-page="@(Model.PageIndex+1)" class="btn btn-primary @nextDisabled" >Next</a>

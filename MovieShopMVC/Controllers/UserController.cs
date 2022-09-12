@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Contracts.Repository;
+﻿using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -67,7 +67,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Favorites(int movieId)
+        public async Task<IActionResult> Favorites()
         {
             var userId = _currentUser.UserId;
             var favorites = await _userService.GetAllFavoritesForUser(userId);

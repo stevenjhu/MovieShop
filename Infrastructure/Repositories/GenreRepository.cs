@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class ReportRepository:IReportRepository
+    public class GenreRepository : IGenreRepository
     {
+
     }
 }

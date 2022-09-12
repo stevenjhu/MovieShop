@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Contracts.Repository;
+﻿using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Entities;
 using Infrastructure.Data;
 using System;
@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Models;
 
 namespace Infrastructure.Repositories
 {
@@ -30,11 +31,34 @@ namespace Infrastructure.Repositories
             return movieDetails;
         }
 
-        public async Task<List<Movie>> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
+        public async Task<PagedResultSet<Movie>> GetMoviesByGenre(int genreId, int pageSize = 30, int page= 1)
         {
-            var movieGenre = await _movieShopDbContext.MovieGenres.FirstOrDefaultAsync(m => m.GenreId == genreId);
-            var movies = await _movieShopDbContext.Movies.Where(m => m.GenresOfMovie.Contains(movieGenre)).Skip(pageSize*(pageNumber-1)).Take(pageSize).ToListAsync();
-            return movies;
+            //get total row count
+            var totalMovieCountOfGenre = await _movieShopDbContext.MovieGenres
+                .Where(g => g.GenreId == genreId)
+                .CountAsync();
+            if (totalMovieCountOfGenre == 0)
+            {
+                throw new Exception("No Movies found for this genre");
+            }
+
+            //get the actual data
+            var movies = await _movieShopDbContext.MovieGenres
+                .Where(g => g.GenreId == genreId)
+                .Include(g=>g.Movie)
+                .OrderByDescending(m=>m.Movie.Revenue)
+                .Select(m=> new Movie
+                {
+                    Id = m.MovieId,
+                    PosterUrl = m.Movie.PosterUrl,
+                    Title = m.Movie.Title,
+                })
+                .Skip((page-1)*pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var pagedMovies = new PagedResultSet<Movie>(movies, page, pageSize, totalMovieCountOfGenre);
+            return pagedMovies;
         }
 
         public async Task<List<Movie>> GetTop30GrossingMovies()

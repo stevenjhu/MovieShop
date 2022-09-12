@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Contracts.Repository;
+﻿using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Infrastructure.Repositories;
@@ -34,15 +34,18 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public async Task<List<MovieCardModel>> GetMoviesByGenre(int genreId, int pageSize, int pageNumber)
+        public async Task<PagedResultSet<MovieCardModel>> GetMoviesByGenre(int genreId, int pageSize = 30, int page = 1)
         {
-            var movies = await _movieRepository.GetMoviesByGenre(genreId,pageSize,pageNumber);
+            var movies = await _movieRepository.GetMoviesByGenre(genreId,pageSize,page);
             var movieCards = new List<MovieCardModel>();
-            foreach (var movie in movies)
+            movieCards.AddRange(movies.Data.Select(m=> new MovieCardModel
             {
-                movieCards.Add(new MovieCardModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
-            }
-            return movieCards;
+                Id= m.Id,
+                Title= m.Title,
+                PosterUrl= m.PosterUrl
+            }));
+
+            return new PagedResultSet<MovieCardModel>(movieCards,page,pageSize,movies.TotalRowCount);
         }
 
         public async Task<MovieDetailsModel> GetMovieDetails(int movieId)
